@@ -24,6 +24,7 @@ import {
   PlusCircle,
   FileText,
   HelpCircle,
+  Settings2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -46,6 +47,8 @@ export function AppShell({ children }: AppShellProps) {
     { name: "AI Assistant", href: "/assistant", icon: Bot, badge: "AI" },
     { name: "Employee Directory", href: "/directory", icon: Users, badge: "12" },
     { name: "Analytics", href: "/analytics", icon: BarChart3, badge: "Live" },
+    { name: "Profile", href: "/settings", icon: Settings2, badge: null },
+
   ];
 
   const handleQuickSearchSubmit = (e: React.FormEvent) => {
@@ -235,7 +238,7 @@ export function AppShell({ children }: AppShellProps) {
           {/* Sidebar Card */}
           <div className="pt-2">
             <div className="relative overflow-hidden p-4 rounded-3xl bg-[#EEF2FF] dark:bg-indigo-950/40 border border-indigo-100/80 dark:border-indigo-800/40 shadow-2xs group min-h-[125px] flex items-center justify-between">
-              
+
               {/* Decorative Indigo Sparkle Accents */}
               <div className="absolute top-3 right-8 text-[#6366F1] dark:text-indigo-400 pointer-events-none">
                 <Sparkles className="w-5 h-5 fill-[#6366F1]/20 dark:fill-indigo-400/20 animate-pulse" />
