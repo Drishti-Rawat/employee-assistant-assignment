@@ -33,18 +33,19 @@ export function DepartmentBarChart() {
   }
 
   return (
-    <div className="w-full h-72">
+    <div className="w-full h-64 sm:h-72 lg:h-80">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ top: 20, right: 20, left: -20, bottom: 20 }}>
+        <BarChart data={data} margin={{ top: 15, right: 10, left: -25, bottom: 15 }}>
           <CartesianGrid strokeDasharray="3 3" opacity={0.15} vertical={false} />
           <XAxis
             dataKey="name"
-            tick={{ fontSize: 11, fill: "#94a3b8" }}
+            tick={{ fontSize: 10, fill: "#94a3b8" }}
             axisLine={false}
             tickLine={false}
+            interval={0}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: "#94a3b8" }}
+            tick={{ fontSize: 10, fill: "#94a3b8" }}
             axisLine={false}
             tickLine={false}
           />
@@ -54,11 +55,12 @@ export function DepartmentBarChart() {
               borderColor: "#1e293b",
               borderRadius: "16px",
               color: "#fff",
-              fontSize: "12px",
+              fontSize: "11px",
+              padding: "8px 12px",
             }}
             cursor={{ fill: "rgba(99, 102, 241, 0.08)" }}
           />
-          <Bar dataKey="count" radius={[8, 8, 0, 0]}>
+          <Bar dataKey="count" radius={[6, 6, 0, 0]}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}

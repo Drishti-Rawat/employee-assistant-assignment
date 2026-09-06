@@ -204,7 +204,7 @@ export function LandingHeader({
                 <div className="pt-4 text-center">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-800/40 text-[11px] font-semibold text-[#6366F1] dark:text-indigo-400">
                     <Sparkles className="w-3 h-3" />
-                    Powered by Gemini AI Engine
+                    Powered by WorkWise AI
                   </span>
                 </div>
               </div>

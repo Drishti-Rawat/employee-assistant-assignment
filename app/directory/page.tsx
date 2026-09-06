@@ -99,57 +99,66 @@ export default function DirectoryPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-              <Users className="w-4 h-4" />
-            </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-              Employee Directory
-            </h1>
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
-              {filteredEmployees.length} Total
-            </span>
-          </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-            Search, filter by department, export records, or add new team members.
-          </p>
-        </div>
+    <div className="w-full max-w-[1440px] mx-auto p-3 sm:p-5 lg:p-6 space-y-4 sm:space-y-6">
+      {/* Compact Header Banner Card */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#EEF2FF] via-[#E8EDFF] to-[#E0E7FF] dark:from-[#1E1B4B]/90 dark:via-[#1E1B4B]/70 dark:to-[#0F172A] border border-indigo-100/90 dark:border-indigo-800/40 p-4 sm:px-6 sm:py-4 shadow-xs group">
+        
+        {/* Decorative Background Blob */}
+        <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-300/20 dark:bg-indigo-600/10 rounded-full blur-2xl pointer-events-none" />
 
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={handleExportCSV}
-            className="px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-all flex items-center gap-2"
-          >
-            <Download className="w-4 h-4" />
-            Export CSV
-          </button>
-          <button
-            onClick={() => setIsAddModalOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all flex items-center gap-2"
-          >
-            <UserPlus className="w-4 h-4" />
-            Add Employee
-          </button>
+        <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+          {/* Left Text Content */}
+          <div className="space-y-1 min-w-0">
+            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+              <h1 className="text-base sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                Employee <span className="text-[#6366F1] dark:text-indigo-400">Directory</span>
+              </h1>
+              <span className="text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#6366F1] text-white shadow-2xs">
+                {filteredEmployees.length} Members
+              </span>
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/80 dark:bg-white/10 text-slate-700 dark:text-slate-200 border border-indigo-200/50 dark:border-white/10">
+                <Sparkles className="w-3 h-3 text-[#6366F1]" />
+                People & Teams
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium sm:truncate max-w-xl">
+              Search teammates by skill, department, role, export records, or connect directly using AI.
+            </p>
+          </div>
+
+          {/* Right Action Buttons */}
+          <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-start sm:justify-end">
+            <button
+              onClick={handleExportCSV}
+              className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-white/90 dark:bg-slate-800/90 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5 border border-indigo-100 dark:border-slate-700 shadow-2xs active:scale-95 flex-1 sm:flex-initial justify-center"
+            >
+              <Download className="w-3.5 h-3.5 text-[#6366F1]" />
+              <span>Export CSV</span>
+            </button>
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-[#6366F1] hover:bg-indigo-600 text-white text-xs font-extrabold shadow-md shadow-indigo-500/25 transition-all flex items-center gap-1.5 active:scale-95 flex-1 sm:flex-initial justify-center"
+            >
+              <UserPlus className="w-3.5 h-3.5" />
+              <span>Add Employee</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Filter Toolbar */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 sm:p-5 shadow-xs space-y-4">
+      {/* Filter Toolbar Card */}
+      <div className="bg-white dark:bg-[#111827] border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xs space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
           {/* Search Input */}
           <div className="md:col-span-6 relative">
-            <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by name, role, email, skill, or department..."
-              className="w-full pl-9 pr-4 py-2.5 text-xs sm:text-sm rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-9 pr-4 py-2.5 text-xs sm:text-sm rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-slate-900 dark:text-white focus:bg-white dark:focus:bg-[#1A2333] focus:outline-none focus:ring-2 focus:ring-[#6366F1]/50 transition-all placeholder:text-slate-400 font-medium"
             />
           </div>
 
@@ -158,7 +167,7 @@ export default function DirectoryPage() {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value as EmployeeStatus | "All")}
-              className="w-full px-3 py-2.5 text-xs sm:text-sm rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2.5 text-xs sm:text-sm rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6366F1]/50 transition-all font-semibold"
             >
               <option value="All">All Statuses (Active, Remote...)</option>
               <option value="Active">Active Only</option>
@@ -172,20 +181,20 @@ export default function DirectoryPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="flex-1 px-3 py-2.5 text-xs sm:text-sm rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex-1 px-3 py-2.5 text-xs sm:text-sm rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6366F1]/50 transition-all font-semibold"
             >
               <option value="name">Sort by Name</option>
               <option value="department">Sort by Department</option>
               <option value="joinDate">Sort by Join Date</option>
             </select>
 
-            <div className="flex items-center p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+            <div className="flex items-center p-1 bg-slate-100 dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-1.5 rounded-lg transition-colors ${
+                className={`p-1.5 rounded-xl transition-all ${
                   viewMode === "grid"
-                    ? "bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs"
-                    : "text-slate-400 hover:text-slate-600"
+                    ? "bg-[#6366F1] text-white shadow-xs"
+                    : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 }`}
                 title="Grid View"
               >
@@ -193,10 +202,10 @@ export default function DirectoryPage() {
               </button>
               <button
                 onClick={() => setViewMode("table")}
-                className={`p-1.5 rounded-lg transition-colors ${
+                className={`p-1.5 rounded-xl transition-all ${
                   viewMode === "table"
-                    ? "bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs"
-                    : "text-slate-400 hover:text-slate-600"
+                    ? "bg-[#6366F1] text-white shadow-xs"
+                    : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 }`}
                 title="Table View"
               >
@@ -208,17 +217,17 @@ export default function DirectoryPage() {
 
         {/* Department Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-          <span className="text-xs font-semibold text-slate-400 mr-1 shrink-0">Depts:</span>
+          <span className="text-xs font-bold text-slate-400 mr-1 shrink-0">Depts:</span>
           {DEPARTMENTS.map((dept) => {
             const isSelected = selectedDept === dept;
             return (
               <button
                 key={dept}
                 onClick={() => setSelectedDept(dept)}
-                className={`text-xs px-3 py-1.5 rounded-xl font-medium shrink-0 transition-all ${
+                className={`text-xs px-3.5 py-1.5 rounded-xl font-bold shrink-0 transition-all ${
                   isSelected
-                    ? "bg-indigo-600 text-white shadow-xs font-semibold"
-                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+                    ? "bg-[#6366F1] text-white shadow-md shadow-indigo-500/20"
+                    : "bg-slate-100 dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/60"
                 }`}
               >
                 {dept}

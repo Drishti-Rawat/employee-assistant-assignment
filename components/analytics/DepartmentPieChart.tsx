@@ -28,15 +28,15 @@ export function DepartmentPieChart() {
   }
 
   return (
-    <div className="w-full h-72">
+    <div className="w-full h-64 sm:h-72 lg:h-80">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}
             cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={90}
+            cy="45%"
+            innerRadius={50}
+            outerRadius={80}
             paddingAngle={4}
             dataKey="value"
           >
@@ -50,14 +50,15 @@ export function DepartmentPieChart() {
               borderColor: "#1e293b",
               borderRadius: "16px",
               color: "#fff",
-              fontSize: "12px",
+              fontSize: "11px",
+              padding: "8px 12px",
             }}
           />
           <Legend
             verticalAlign="bottom"
             height={36}
             iconType="circle"
-            formatter={(value) => <span className="text-xs text-slate-600 dark:text-slate-400">{value}</span>}
+            formatter={(value) => <span className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 font-medium">{value}</span>}
           />
         </PieChart>
       </ResponsiveContainer>
