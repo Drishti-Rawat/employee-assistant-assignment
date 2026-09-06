@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 const caveat = Caveat({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
-  title: "EmpPulse AI | Enterprise Employee Assistant & HR Dashboard",
+  title: "WorkWise AI | Enterprise Employee Assistant & HR Dashboard",
   description:
     "A modern AI-powered Employee Assistant Dashboard featuring smart Q&A, employee directory search, real-time analytics, and personalized settings.",
 };

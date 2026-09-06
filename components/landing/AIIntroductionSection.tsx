@@ -15,7 +15,7 @@ export function AIIntroductionSection() {
           Built for Modern Workplaces
         </h2>
         <p className="text-stone-600 dark:text-stone-400 text-sm sm:text-base">
-          EmpPulse AI connects seamlessly with employee documentation, directory profiles, and organizational metrics to deliver immediate results.
+          WorkWise AI connects seamlessly with employee documentation, directory profiles, and organizational metrics to deliver immediate results.
         </p>
       </div>
 

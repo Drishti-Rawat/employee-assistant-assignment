@@ -24,6 +24,8 @@ import {
   ExternalLink,
   ShieldCheck,
   Clock,
+  AlertCircle,
+  RotateCcw,
 } from "lucide-react";
 
 interface LocalMessage {
@@ -37,6 +39,8 @@ interface LocalMessage {
   linkHref?: string;
   linkText?: string;
   suggestedPrompts?: string[];
+  isError?: boolean;
+  originalQuery?: string;
 }
 
 const INITIAL_MESSAGES: LocalMessage[] = [
@@ -98,6 +102,75 @@ const SUGGESTED_PROMPTS = [
   "List upcoming company holidays.",
   "Who is in the product team?",
 ];
+
+function renderBoldText(text: string) {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className="font-bold text-slate-900 dark:text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
+function FormattedMarkdownText({ content }: { content: string }) {
+  const lines = content.split("\n");
+  return (
+    <div className="space-y-2 leading-relaxed text-xs sm:text-sm">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) return null;
+
+        if (trimmed.startsWith("### ") || trimmed.startsWith("## ") || trimmed.startsWith("# ")) {
+          const headerText = trimmed.replace(/^#+\s*/, "");
+          return (
+            <h4 key={idx} className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white mt-1 mb-1">
+              {renderBoldText(headerText)}
+            </h4>
+          );
+        }
+
+        if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+          const bulletText = trimmed.substring(2);
+          return (
+            <div key={idx} className="flex items-start gap-2 text-slate-700 dark:text-slate-200 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] dark:bg-indigo-400 mt-1.5 shrink-0" />
+              <div className="flex-1">{renderBoldText(bulletText)}</div>
+            </div>
+          );
+        }
+
+        const numberedMatch = trimmed.match(/^(\d+)\.\s+(.*)/);
+        if (numberedMatch) {
+          const num = numberedMatch[1];
+          const itemText = numberedMatch[2];
+          return (
+            <div key={idx} className="flex items-start gap-2 text-slate-700 dark:text-slate-200 font-medium">
+              <span className="w-4.5 h-4.5 rounded-full bg-[#6366F1] text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                {num}
+              </span>
+              <div className="flex-1">{renderBoldText(itemText)}</div>
+            </div>
+          );
+        }
+
+        if (trimmed.startsWith("*") && trimmed.endsWith("*") && !trimmed.includes("**")) {
+          return (
+            <p key={idx} className="italic text-xs text-slate-500 dark:text-slate-400 mt-1">
+              {trimmed.slice(1, -1)}
+            </p>
+          );
+        }
+
+        return <p key={idx} className="font-medium text-slate-800 dark:text-slate-100">{renderBoldText(trimmed)}</p>;
+      })}
+    </div>
+  );
+}
 
 function AssistantContent() {
   const searchParams = useSearchParams();
@@ -178,8 +251,10 @@ function AssistantContent() {
       const fallbackMsg: LocalMessage = {
         id: `ai-err-${Date.now()}`,
         sender: "ai",
-        text: `I'm currently unable to reach the cloud AI service, but I can help you navigate policies or locate colleagues in the directory!`,
+        text: `Unable to connect to the cloud AI service right now. Please check your connection or try again.`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        isError: true,
+        originalQuery: queryText,
       };
       setMessages((prev) => [...prev, fallbackMsg]);
     } finally {
@@ -292,12 +367,35 @@ function AssistantContent() {
                   <div className={`space-y-1 max-w-[88%] sm:max-w-[82%] ${!isAI && "flex flex-col items-end"}`}>
                     <div
                       className={`p-3.5 rounded-2xl relative shadow-2xs ${
-                        isAI
+                        msg.isError
+                          ? "bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 rounded-tl-xs"
+                          : isAI
                           ? "bg-slate-50/90 dark:bg-[#1F2937]/90 border border-slate-200/60 dark:border-slate-700/60 text-slate-800 dark:text-slate-100 rounded-tl-xs"
                           : "bg-[#6366F1] text-white rounded-tr-xs shadow-md shadow-indigo-500/15"
                       }`}
                     >
-                      <p className="font-semibold text-xs sm:text-sm leading-relaxed">{msg.text}</p>
+                      {msg.isError ? (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 font-bold text-xs text-red-600 dark:text-red-400">
+                            <AlertCircle className="w-4 h-4 shrink-0" />
+                            <span>Connection / Service Error</span>
+                          </div>
+                          <p className="text-xs text-red-700 dark:text-red-300 font-medium">{msg.text}</p>
+                          {msg.originalQuery && (
+                            <button
+                              onClick={() => handleSendMessage(msg.originalQuery)}
+                              className="mt-1 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition-all active:scale-95 cursor-pointer"
+                            >
+                              <RotateCcw className="w-3.5 h-3.5" />
+                              <span>Retry Message</span>
+                            </button>
+                          )}
+                        </div>
+                      ) : isAI ? (
+                        <FormattedMarkdownText content={msg.text} />
+                      ) : (
+                        <p className="font-semibold text-xs sm:text-sm leading-relaxed">{msg.text}</p>
+                      )}
 
                       {/* Custom Formatted Bullet List */}
                       {msg.bulletItems && (

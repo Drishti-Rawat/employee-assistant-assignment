@@ -94,7 +94,7 @@ export function MessageBubble({ message, onSuggestedClick, isLatest }: MessageBu
       <div className={`space-y-2 max-w-[88%] sm:max-w-[78%] ${!isAI && "flex flex-col items-end"}`}>
         {/* Top bar with sender & timestamp */}
         <div className="flex items-center gap-2 px-1 text-[11px] text-stone-400">
-          <span className="font-semibold">{isAI ? "EmpPulse AI" : userProfile.name}</span>
+          <span className="font-semibold">{isAI ? "WorkWise AI" : userProfile.name}</span>
           <span>•</span>
           <span>{message.timestamp}</span>
         </div>
